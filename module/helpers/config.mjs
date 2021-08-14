@@ -4,7 +4,7 @@ export const MNM3E = {};
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
- MNM3E.abilities = {
+MNM3E.abilities = {
 	"str": "MNM3E.AbilityStr",
 	"sta": "MNM3E.AbilitySta",
 	"agi": "MNM3E.AbilityAgi",
@@ -26,6 +26,10 @@ MNM3E.abilityAbbreviations = {
 	"pre": "MNM3E.AbilityPreAbbr"
 };
 
+/**
+ * The set of Skills used within the sytem.
+ * @type {Object}
+ */
 MNM3E.skills = {
 	"acr": "MNM3E.SkillAcr",
 	"ath": "MNM3E.SkillAth",
@@ -81,3 +85,26 @@ MNM3E.skillAbbreviations = {
 	"trt": "MNM3E.SkillTrtAbbr",
 	"veh": "MNM3E.SkillVehAbbr"
 };
+
+/**
+ * The set of Defences used within the sytem.
+ * @type {Object}
+ */
+MNM3E.defences = {
+	"dod": "MNM3E.DefenceDod",
+	"par": "MNM3E.DefencePar",
+	"for": "MNM3E.DefenceFor",
+	"wil": "MNM3E.DefenceWil",
+	"tou": "MNM3E.DefenceTou",
+};
+
+MNM3E.defenceAbbreviations = {
+	"dod": "MNM3E.DefenceDodAbbr",
+	"par": "MNM3E.DefenceParAbbr",
+	"for": "MNM3E.DefenceForAbbr",
+	"wil": "MNM3E.DefenceWilAbbr",
+	"tou": "MNM3E.DefenceTouAbbr",
+};
+
+MNM3E.initiative = "MNM3E.Ini";
+MNM3E.initiativeAbbreviation = "MNM3E.IniAbbr";

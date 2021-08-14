@@ -12,8 +12,8 @@ export class MnM3eActorSheet extends ActorSheet {
 			classes: ["mnm3e", "sheet", "actor"],
 			template: "systems/mnm3e/templates/actor/actor-sheet.html",
 			width: 600,
-			height: 600,
-			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
+			height: 720,
+			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
 		});
 	}
 
@@ -62,16 +62,67 @@ export class MnM3eActorSheet extends ActorSheet {
 	 * @return {undefined}
 	 */
 	_prepareCharacterData(context) {
-		// Handle ability scores.
+		context.data.attributes.power.spent = {
+			abilities: 0,
+			skills: 0,
+			defences: 0,
+			advantages: 0,
+			powers: 0,
+		};
+
+
+		// Handle abilities.
 		for (let [k, v] of Object.entries(context.data.abilities)) {
 			v.label = game.i18n.localize(CONFIG.MNM3E.abilities[k]) ?? k;
-		}
-		// Handle skills.
-		for (let [k, v] of Object.entries(context.data.skills)) {
-			v.label = game.i18n.localize(CONFIG.MNM3E.skills[k]) ?? k;
+			context.data.attributes.power.spent.abilities += 2 * (v.rank ?? 0);
 		}
 
-		context.data.attributes.power.pointsSpent = context.data.attributes.power.points;
+		// Handle skills.
+		let done = {};
+		for (let [k, v] of Object.entries(context.data.skills)) {
+			v.label = game.i18n.localize(CONFIG.MNM3E.skills[k]) ?? k;
+			v.abilityTotal = context.data.abilities[v.ability]?.total ?? 0;
+
+			if (v.type === "") {
+				const group = k.substring(0, k.length-1);
+				if (!done[group]){
+					v.showDisabled = true;
+					done[group] = true;
+				}
+			}
+			else v.show = true;
+
+			context.data.attributes.power.spent.skills += v.rank ?? 0;
+		}
+		context.data.attributes.power.spent.skills = Math.ceil(context.data.attributes.power.spent.skills / 2);
+
+		// Handle defences.
+		for (let [k, v] of Object.entries(context.data.defences)) {
+			v.label = game.i18n.localize(CONFIG.MNM3E.defences[k]) ?? k;
+			v.abilityTotal = context.data.abilities[v.ability]?.total ?? 0;
+			context.data.attributes.power.spent.defences += v.rank ?? 0;
+		}
+
+		// Handle advantages.
+		for (let [k, v] of Object.entries(context.advantages)) {
+			context.data.attributes.power.spent.advantages += v.data.rank ?? 1;
+		}
+
+		// Handle powers.
+		for (let [k, v] of Object.entries(context.powers)) {
+			context.data.attributes.power.spent.powers += +((v.data.overrideCost !== null) ? v.data.overrideCost : v.data.cost) ?? 0;
+		}
+
+		// Handle Initiative.
+		context.data.attributes.ini.label = game.i18n.localize(CONFIG.MNM3E.initiative) ?? "ini";
+		context.data.attributes.ini.abilityTotal = context.data.abilities[context.data.attributes.ini.ability ?? "agi"]?.total ?? 0;
+
+		context.data.attributes.power.spent.total = 0
+			+ context.data.attributes.power.spent.abilities
+			+ context.data.attributes.power.spent.skills
+			+ context.data.attributes.power.spent.defences
+			+ context.data.attributes.power.spent.advantages
+			+ context.data.attributes.power.spent.powers;
 		context.data.attributes.power.pointsSuggestedMin = context.data.attributes.power.lvl * 15;
 		context.data.attributes.power.pointsSuggestedMax = context.data.attributes.power.pointsSuggestedMin + 14;
 	}
@@ -147,7 +198,7 @@ export class MnM3eActorSheet extends ActorSheet {
 		html.find('.rollable').click(this._onRoll.bind(this));
 
 		// Drag events for macros.
-		if (this.actor.owner) {
+		if (this.actor.isOwner) {
 			let handler = ev => this._onDragStart(ev);
 			html.find('li.item').each((i, li) => {
 				if (li.classList.contains("inventory-header")) return;
@@ -205,7 +256,7 @@ export class MnM3eActorSheet extends ActorSheet {
 
 		// Handle rolls that supply the formula directly.
 		if (dataset.roll) {
-			let label = dataset.label ? `[ability] ${dataset.label}` : '';
+			let label = dataset.label ? `[${dataset.rtype}] ${dataset.label}` : '';
 			let roll = new Roll(dataset.roll, this.actor.getRollData()).roll();
 			roll.toMessage({
 				speaker: ChatMessage.getSpeaker({ actor: this.actor }),

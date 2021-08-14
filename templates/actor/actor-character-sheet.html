@@ -14,9 +14,9 @@
 				and it will add a small amount of padding, a border, and will
 				center all of its child elements content and text. --}}
 				<div class="resource flex-group-center">
-					<label for="data.attributes.powe.pointsSpent" class="resource-label">Power Points</label>
+					<label for="data.attributes.power.pointsSpent" class="resource-label">Character Points</label>
 					<div class="resource-content flexrow flex-center flex-between">
-					<input type="text" name="data.attributes.powe.pointsSpent" value="{{data.attributes.power.pointsSpent}}" data-dtype="Number" readonly="true" title="a (Attributes) + b (Skills) + c (Defenses) + d (Advantages) + e (Powers)" />
+					<input type="text" name="data.attributes.power.spent.total" value="{{data.attributes.power.spent.total}}" data-dtype="Number" readonly="true" title="{{data.attributes.power.spent.abilities}} (Abilities) + {{data.attributes.power.spent.skills}} (Skills) + {{data.attributes.power.spent.defences}} (Defences) + {{data.attributes.power.spent.advantages}} (Advantages) + {{data.attributes.power.spent.powers}} (Powers)" />
 					<span> / </span>
 					<input type="number" name="data.attributes.power.points" value="{{data.attributes.power.points}}" data-dtype="Number" title="Suggested for Power Level: {{data.attributes.power.pointsSuggestedMin}}-{{data.attributes.power.pointsSuggestedMax}}"/>
 					</div>
@@ -29,6 +29,12 @@
 					</div>
 				</div>
 
+				<div class="resource flex-group-center">
+					<label for="data.attributes.victoryPoints" class="resource-label">Victory Points</label>
+					<div class="resource-content flexrow flex-center flex-between">
+					<input type="number" name="data.attributes.victoryPoints" value="{{data.attributes.victoryPoints}}" data-dtype="Number" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</header>
@@ -50,31 +56,88 @@
 		{{!-- Skills Tab --}}
 		<div class="tab skills" data-group="primary" data-tab="skills">
 			<section class="grid grid-3col">
+				{{!-- Abilities on the left --}}
 				<aside class="sidebar">
-
 					{{!-- The grid classes are defined in scss/global/_grid.scss. To use,
 					use both the "grid" and "grid-Ncol" class where "N" can be any number
 					from 1 to 12 and will create that number of columns.  --}}
 					<div class="abilities flexcol">
 						{{#each data.abilities as |ability key|}}
-						<div class="ability flexrow flex-group-center">
-							<label for="data.abilities.{{key}}.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.rank" data-label="{{ability.label}}">{{ability.label}}</label>
-							<input type="text" name="data.abilities.{{key}}.rank" value="{{ability.rank}}" data-dtype="Number"/>
-							<span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.rank" data-label="{{ability.label}}">{{numberFormat ability.rank decimals=0 sign=true}}</span>
-						</div>
+							<div class="ability flexrow flex-group-center">
+								<label for="data.abilities.{{key}}.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.total" data-label="{{ability.label}}" data-rtype="ability">{{ability.label}}</label>
+								<label class="resource-label align-left" title="{{ability.rank}} (Rank) + {{ability.bonus}} (Bonus)">{{ability.total}}</label>
+								<input type="text" name="data.abilities.{{key}}.rank" id="data.abilities.{{key}}.rank" value="{{ability.rank}}" data-dtype="Number"/>
+							</div>
 						{{/each}}
+					</div>
+					<hr>
+					{{!-- Defences below  --}}
+					<div class="abilities flexcol">
+						{{#each data.defences as |defence key|}}
+							<div class="ability flexrow flex-group-center">
+								<label for="data.defences.{{key}}.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@defences.{{key}}.total" data-label="{{defence.label}}" data-rtype="defence">{{defence.label}}</label>
+								<label class="resource-label align-left" title="10 + {{defence.rank}} (Rank) + {{defence.abilityTotal}} (Ability) + {{defence.bonus}} (Bonus)">{{defence.static}}</label>
+								{{#if defence.readonly}}
+									<input type="text" name="data.defences.{{key}}.rank" id="data.defences.{{key}}.rank" value="{{defence.rank}}" data-dtype="Number" disabled/>
+								{{else}}
+									<input type="text" name="data.defences.{{key}}.rank" id="data.defences.{{key}}.rank" value="{{defence.rank}}" data-dtype="Number"/>
+								{{/if}}
+							</div>
+						{{/each}}
+					</div>
+					<hr>
+					{{!-- And then Initiative  --}}
+					<div class="abilities flexcol">
+						<div class="ability flexrow flex-group-center">
+							<label for="data.attributes.ini.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@attributes.ini.total" data-label="{{label}}" data-rtype="initiative">{{data.attributes.ini.label}}</label>
+							<label class="resource-label align-left" title="{{data.attributes.ini.rank}} (Rank) + {{data.attributes.ini.abilityTotal}} (Ability) + {{data.attributes.ini.bonus}} (Bonus)">{{numberFormat data.attributes.ini.total decimals=0 sign=true}}</label>
+							<input type="text" name="data.attributes.ini.rank" id="data.attributes.ini.rank" value="{{data.attributes.ini.rank}}" data-dtype="Number" disabled/>
+						</div>
 					</div>
 				</aside>
 
-				{{!-- For the main features list, span the right two columns --}}
+
+				{{!-- Skills on the right --}}
 				<section class="main grid-span-2">
 					<div class="abilities flexcol">
 						{{#each data.skills as |skill key|}}
-						<div class="skill flexrow flex-group-center">
-							<label for="data.skills.{{key}}.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@skills.{{key}}.rank" data-label="{{skill.label}}">{{skill.label}}</label>
-							<input type="text" name="data.skills.{{key}}.rank" value="{{skill.rank}}" data-dtype="Number"/>
-							<span class="skill-mod rollable" data-roll="d20+@skills.{{key}}.rank" data-label="{{skill.label}}">{{numberFormat skill.rank decimals=0 sign=true}}</span>
-						</div>
+							<div class="skill flexrow flex-group-center">
+								{{#if skill.showDisabled}}
+									<label for="data.skills.{{key}}.rank" class="resource-label flexlarge align-left" data-label="{{skill.label}}" data-rtype="skill" disabled>{{skill.label}}</label>
+									<div class="skill">
+										<input type="text" name="data.skills.{{key}}.type" value="{{skill.type}}" data-dtype="String"/>
+									</div>
+									<select name="data.skills.{{key}}.ability" data-dtype="String" disabled>
+										{{#each ../data.abilities as |ability akey|}}
+											{{#if (eq skill.ability akey)}}
+												<option value="{{akey}}" selected>{{ability.label}}</option>
+											{{else}}
+												<option value="{{akey}}">{{ability.label}}</option>
+											{{/if}}
+										{{/each}}
+									</select>
+									<input type="text" name="data.skills.{{key}}.rank" value="{{skill.rank}}" data-dtype="Number" disabled/>
+									<span class="skill-mod" data-label="{{skill.label}}" title="{{skill.rank}} (Rank) + {{skill.abilityTotal}} (Ability) + {{skill.bonus}} (Bonus)" disabled>{{numberFormat skill.total decimals=0 sign=true}}</span>
+								{{else}}{{#if skill.show}}
+									<label for="data.skills.{{key}}.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@skills.{{key}}.total" data-label="{{skill.label}}" data-rtype="skill">{{skill.label}}</label>
+									<div class="skill">
+										{{#if (isDefined skill.type)}}
+											<input type="text" name="data.skills.{{key}}.type" value="{{skill.type}}" data-dtype="String"/>
+										{{/if}}
+									</div>
+									<select name="data.skills.{{key}}.ability" data-dtype="String">
+										{{#each ../data.abilities as |ability akey|}}
+											{{#if (eq skill.ability akey)}}
+												<option value="{{akey}}" selected>{{ability.label}}</option>
+											{{else}}
+												<option value="{{akey}}">{{ability.label}}</option>
+											{{/if}}
+										{{/each}}
+									</select>
+									<input type="text" name="data.skills.{{key}}.rank" value="{{skill.rank}}" data-dtype="Number"/>
+									<span class="skill-mod rollable" data-roll="d20+@skills.{{key}}.total" data-label="{{skill.label}}" data-rtype="skill" title="{{skill.rank}} (Rank) + {{skill.abilityTotal}} (Ability) + {{skill.bonus}} (Bonus)">{{numberFormat skill.total decimals=0 sign=true}}</span>
+								{{/if}}{{/if}}
+							</div>
 						{{/each}}
 					</div>
 				</section>

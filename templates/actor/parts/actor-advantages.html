@@ -1,6 +1,7 @@
 <ol class="items-list">
   <li class="item flexrow items-header">
     <div class="item-name">Name</div>
+    <div class="item-rank flex-group-center">Rank</div>
     <div class="item-controls">
       <a class="item-control item-create" title="Create item" data-type="advantage"><i class="fas fa-plus"></i> Add item</a>
     </div>
@@ -13,6 +14,7 @@
         </div>
         <h4>{{item.name}}</h4>
       </div>
+      <div class="item-rank flex-group-center">{{item.data.rank}}</div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>

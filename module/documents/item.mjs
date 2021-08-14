@@ -10,13 +10,20 @@ export class MnM3eItem extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+
+    let data = this.data.data;
+
+    data.rankCost = data.baseCost + data.extrasRankCost - Math.abs(data.flawsRankCost);
+    data.flatCost = data.extrasFlatCost - Math.abs(data.flawsFlatCost);
+    if (data.rankCost >= 1) data.cost = Math.max(1, data.rankCost * data.rank + data.flatCost);
+    else data.cost = Math.max(1, Math.ceil(data.rank / (2 - data.rankCost)) + data.flatCost);
   }
 
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-   getRollData() {
+  getRollData() {
     // If present, return the actor's roll data.
     if ( !this.actor ) return null;
     const rollData = this.actor.getRollData();

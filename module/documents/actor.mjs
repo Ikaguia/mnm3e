@@ -17,6 +17,13 @@ export class MnM3eActor extends Actor {
 	prepareBaseData() {
 		// Data modifications in this step occur before processing embedded
 		// documents or derived data.
+		const data = this.data.data;
+
+		// Reset the bonus of abilities, skills, defences, and initiative to 0.
+		for (let [k, v] of Object.entries(data.abilities)) v.bonus = 0;
+		for (let [k, v] of Object.entries(data.skills)) v.bonus = 0;
+		for (let [k, v] of Object.entries(data.defences)) v.bonus = 0;
+		data.attributes.ini.bonus = 0;
 	}
 
 	/**
@@ -43,14 +50,26 @@ export class MnM3eActor extends Actor {
 	 */
 	_prepareCharacterData(actorData) {
 		if (actorData.type !== 'character') return;
-
-		// Make modifications to data here. For example:
 		const data = actorData.data;
 
-		// Loop through skill, and add their ability ranks to our sheet output.
-		for (let [key, skill] of Object.entries(data.skills)) {
-			skill.rank = skill.rank + abilities[skill.ability];
+		// Calculate the total bonus for each ability
+		for (let [key, ability] of Object.entries(data.abilities)) {
+			ability.total = (+ability.rank) + (+ability.bonus);
 		}
+
+		// Calculate the total bonus for each skill, adding their base ability ranks as well
+		for (let [key, skill] of Object.entries(data.skills)) {
+			skill.total = (+skill.rank) + (+(data.abilities[skill.ability]?.total ?? 0)) + (+skill.bonus);
+		}
+
+		// Calculate the total bonus for each defence
+		for (let [key, defence] of Object.entries(data.defences)) {
+			defence.total = (+defence.rank) + (+(data.abilities[defence.ability]?.total ?? 0)) + (+defence.bonus);
+			defence.static = 10 + defence.total;
+		}
+
+		// Calculate the total initiative bonus
+		data.attributes.ini.total = (+data.attributes.ini.rank) + (+(data.abilities[data.attributes.ini.ability]?.total ?? 0)) + (+data.attributes.ini.bonus);
 	}
 
 	/**
@@ -80,9 +99,13 @@ export class MnM3eActor extends Actor {
 		}
 
 		// Add level for easier access, or fall back to 0.
-		if (data.attributes.level) {
-			data.lvl = data.attributes.level.value ?? 0;
-		}
+		data.lvl = data.attributes.power.lvl ?? 0;
+	}
+
+	async _preCreate(data, options, user) {
+		await super._preCreate(data, options, user);
+
+		this.data.token.update({actorLink: true});
 	}
 
 }

@@ -12,6 +12,7 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="attributes">Attributes</a>
+    <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -25,6 +26,46 @@
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{!-- As you add new fields, add them in here! --}}
+      {{log data}}
+      <div class="flexrow">
+        <label for="data.rank">Ranks</label>
+        <input type="text" name="data.rank" value="{{data.rank}}" data-dtype="Number" />
+      </div>
+      <div class="flexrow">
+        <label for="data.baseCost">Base Cost per Rank</label>
+        <input type="text" name="data.baseCost" value="{{data.baseCost}}" data-dtype="Number" />
+      </div>
+      <label for="data.extrasRankCost">Extras</label>
+      <div class="flexrow">
+        <label for="data.extrasRankCost"> Cost per Rank</label>
+        <input type="text" name="data.extrasRankCost" value="{{data.extrasRankCost}}" data-dtype="Number" />
+      </div>
+      <div class="flexrow">
+        <label for="data.extrasFlatCost"> Flat Cost</label>
+        <input type="text" name="data.extrasFlatCost" value="{{data.extrasFlatCost}}" data-dtype="Number" />
+      </div>
+      <label for="data.extrasRankCost">Flaws</label>
+      <div class="flexrow">
+        <label for="data.flawsRankCost">  Cost per Rank</label>
+        <input type="text" name="data.flawsRankCost" value="{{data.flawsRankCost}}" data-dtype="Number" />
+      </div>
+      <div class="flexrow">
+        <label for="data.flawsFlatCost">  Flat Cost</label>
+        <input type="text" name="data.flawsFlatCost" value="{{data.flawsFlatCost}}" data-dtype="Number" />
+      </div>
+      <div class="flexrow">
+        <label for="data.overrideCost">Override Cost</label>
+        <input type="text" name="data.overrideCost" value="{{data.overrideCost}}" data-dtype="Number" />
+      </div>
+      <div class="flexrow">
+        <label for="data.cost">Final Cost</label>
+        <input type="text" name="data.cost" value="{{data.cost}}" data-dtype="Number" readonly/>
+      </div>
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/mnm3e/templates/item/parts/item-effects.html"}}
     </div>
   </section>
 </form>

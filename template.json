@@ -30,23 +30,23 @@
 				"awe": { "rank": 0 },
 				"pre": { "rank": 0 }
 			},
-			"defenses": {
-					"dod": { "rank": 0 },
-					"par": { "rank": 0 },
-					"for": { "rank": 0 },
-					"wil": { "rank": 0 },
-					"tou": { "rank": 0, "penalty": 0 }
+			"defences": {
+				"dod": { "rank": 0, "ability": "agi" },
+				"for": { "rank": 0, "ability": "sta" },
+				"par": { "rank": 0, "ability": "fgt" },
+				"tou": { "rank": 0, "ability": "sta", "readonly": 1, "penalty": 0 },
+				"wil": { "rank": 0, "ability": "awe" }
 			},
 			"attributes": {
-				"ini": { "rank": 0 },
+				"ini": { "rank": 0, "ability": "agi" },
 				"power": {
 					"lvl": 10,
 					"points": 150
 				},
-				"heroPoints": 1
+				"victoryPoints": 1
 			},
 			"skills": {
-				"acr": { "rank": 0, "ability": "agl" },
+				"acr": { "rank": 0, "ability": "agi" },
 				"ath": { "rank": 0, "ability": "str" },
 				"cc1": { "rank": 0, "ability": "fgt", "type": "" },
 				"cc2": { "rank": 0, "ability": "fgt", "type": "" },
@@ -88,10 +88,18 @@
 			"formula": "d20 + @str.mod + ceil(@lvl / 2)"
 		},
 		"advantage": {
-			"templates": ["base"]
+			"templates": ["base"],
+			"rank": 1
 		},
 		"power": {
-			"templates": ["base"]
+			"templates": ["base"],
+			"rank": 1,
+			"baseCost": 1,
+			"extrasRankCost": 0,
+			"extrasFlatCost": 0,
+			"flawsRankCost": 0,
+			"flawsFlatCost": 0,
+			"overrideCost": null
 		}
 	}
 }
