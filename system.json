@@ -4,7 +4,7 @@
   "description": "The Mutants and Masterminds 3e system for FoundryVTT!",
   "version": "0.0.1",
   "minimumCoreVersion": "0.8.4",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "0.8.9",
   "author": "Ikaguia#2965",
   "esmodules": ["module/mnm3e.mjs"],
   "styles": ["css/mnm3e.css"],

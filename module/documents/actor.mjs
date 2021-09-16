@@ -40,18 +40,6 @@ export class MnM3eActor extends Actor {
 		const data = actorData.data;
 		const flags = actorData.flags.mnm3e || {};
 
-		// Make separate methods for each Actor type (character, npc, etc.) to keep
-		// things organized.
-		this._prepareCharacterData(actorData);
-	}
-
-	/**
-	 * Prepare Character type specific data
-	 */
-	_prepareCharacterData(actorData) {
-		if (actorData.type !== 'character') return;
-		const data = actorData.data;
-
 		// Calculate the total bonus for each ability
 		for (let [key, ability] of Object.entries(data.abilities)) {
 			ability.total = (+ability.rank) + (+ability.bonus);
@@ -70,6 +58,27 @@ export class MnM3eActor extends Actor {
 
 		// Calculate the total initiative bonus
 		data.attributes.ini.total = (+data.attributes.ini.rank) + (+(data.abilities[data.attributes.ini.ability]?.total ?? 0)) + (+data.attributes.ini.bonus);
+
+		// Make separate methods for each Actor type (character, npc, etc.) to keep
+		// things organized.
+		this._prepareCharacterData(actorData);
+		this._prepareNpcData(actorData);
+	}
+
+	/**
+	 * Prepare Character type specific data
+	 */
+	_prepareCharacterData(actorData) {
+		if (actorData.type !== 'character') return;
+		const data = actorData.data;
+	}
+
+	/**
+	 * Prepare NPC type specific data
+	 */
+	_prepareNpcData(actorData) {
+		if (actorData.type !== 'npc') return;
+		const data = actorData.data;
 	}
 
 	/**
@@ -105,7 +114,14 @@ export class MnM3eActor extends Actor {
 	async _preCreate(data, options, user) {
 		await super._preCreate(data, options, user);
 
-		this.data.token.update({actorLink: true});
+		// Player character configuration
+		if (this.type === "character") {
+			this.data.token.update({vision: true, actorLink: true, disposition: 1});
+		}
+        // NPC character configuration
+        else if (this.type === "npc") {
+            this.data.token.update({vision: true, actorLink: true, disposition: 2});
+        }
 	}
 
 }

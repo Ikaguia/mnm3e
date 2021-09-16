@@ -40,7 +40,7 @@ export class MnM3eActorSheet extends ActorSheet {
 		context.flags = actorData.flags;
 
 		// Prepare character data and items.
-		if (actorData.type == 'character') {
+		if (['character', 'npc'].includes(actorData.type)) {
 			this._prepareItems(context);
 			this._prepareCharacterData(context);
 		}

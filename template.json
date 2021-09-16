@@ -1,77 +1,83 @@
 {
 	"Actor": {
-		"types": ["character"],
-		"templates": {},
-		"character": {
-			"templates": [],
-			"flavour": {
-				"heroName": "Hero",
-				"playerName": "Player",
-				"identityName": "Identity",
-				"identityType": "Secret",
-				"gender": "Gender",
-				"age": 42,
-				"height": 0.0,
-				"weight": 0.0,
-				"eyes": "Eyes",
-				"hair": "Hair",
-				"group": "Generic Hero Group Name",
-				"base": "The Base",
-				"complications": "",
-				"biography": ""
-			},
-			"abilities": {
-				"str": { "rank": 0 },
-				"sta": { "rank": 0 },
-				"agi": { "rank": 0 },
-				"dex": { "rank": 0 },
-				"fgt": { "rank": 0 },
-				"int": { "rank": 0 },
-				"awe": { "rank": 0 },
-				"pre": { "rank": 0 }
-			},
-			"defences": {
-				"dod": { "rank": 0, "ability": "agi" },
-				"for": { "rank": 0, "ability": "sta" },
-				"par": { "rank": 0, "ability": "fgt" },
-				"tou": { "rank": 0, "ability": "sta", "readonly": 1, "penalty": 0 },
-				"wil": { "rank": 0, "ability": "awe" }
-			},
-			"attributes": {
-				"ini": { "rank": 0, "ability": "agi" },
-				"power": {
-					"lvl": 10,
-					"points": 150
+		"types": [ "character", "npc" ],
+		"templates": {
+			"actor": {
+				"flavour": {
+					"heroName": "Hero",
+					"playerName": "Player",
+					"identityName": "Identity",
+					"identityType": "Secret",
+					"gender": "Gender",
+					"age": 42,
+					"height": 0.0,
+					"weight": 0.0,
+					"eyes": "Eyes",
+					"hair": "Hair",
+					"group": "Generic Hero Group Name",
+					"base": "The Base",
+					"complications": "",
+					"biography": ""
 				},
-				"victoryPoints": 1
-			},
-			"skills": {
-				"acr": { "rank": 0, "ability": "agi" },
-				"ath": { "rank": 0, "ability": "str" },
-				"cc1": { "rank": 0, "ability": "fgt", "type": "" },
-				"cc2": { "rank": 0, "ability": "fgt", "type": "" },
-				"cc3": { "rank": 0, "ability": "fgt", "type": "" },
-				"cc4": { "rank": 0, "ability": "fgt", "type": "" },
-				"dec": { "rank": 0, "ability": "pre" },
-				"ex1": { "rank": 0, "ability": "int", "type": "" },
-				"ex2": { "rank": 0, "ability": "int", "type": "" },
-				"ex3": { "rank": 0, "ability": "int", "type": "" },
-				"ex4": { "rank": 0, "ability": "int", "type": "" },
-				"ins": { "rank": 0, "ability": "awe" },
-				"int": { "rank": 0, "ability": "pre" },
-				"inv": { "rank": 0, "ability": "int" },
-				"prc": { "rank": 0, "ability": "awe" },
-				"prs": { "rank": 0, "ability": "pre" },
-				"rc1": { "rank": 0, "ability": "dex", "type": "" },
-				"rc2": { "rank": 0, "ability": "dex", "type": "" },
-				"rc3": { "rank": 0, "ability": "dex", "type": "" },
-				"rc4": { "rank": 0, "ability": "dex", "type": "" },
-				"soh": { "rank": 0, "ability": "dex" },
-				"stl": { "rank": 0, "ability": "agi" },
-				"tec": { "rank": 0, "ability": "int" },
-				"trt": { "rank": 0, "ability": "int" },
-				"veh": { "rank": 0, "ability": "dex" }
+				"abilities": {
+					"str": { "rank": 0 },
+					"sta": { "rank": 0 },
+					"agi": { "rank": 0 },
+					"dex": { "rank": 0 },
+					"fgt": { "rank": 0 },
+					"int": { "rank": 0 },
+					"awe": { "rank": 0 },
+					"pre": { "rank": 0 }
+				},
+				"defences": {
+					"dod": { "rank": 0, "ability": "agi" },
+					"for": { "rank": 0, "ability": "sta" },
+					"par": { "rank": 0, "ability": "fgt" },
+					"tou": { "rank": 0, "ability": "sta", "readonly": 1, "penalty": 0 },
+					"wil": { "rank": 0, "ability": "awe" }
+				},
+				"attributes": {
+					"ini": { "rank": 0, "ability": "agi" },
+					"power": {
+						"lvl": 10,
+						"points": 150
+					},
+					"victoryPoints": 1
+				},
+				"skills": {
+					"acr": { "rank": 0, "ability": "agi" },
+					"ath": { "rank": 0, "ability": "str" },
+					"cc1": { "rank": 0, "ability": "fgt", "type": "" },
+					"cc2": { "rank": 0, "ability": "fgt", "type": "" },
+					"cc3": { "rank": 0, "ability": "fgt", "type": "" },
+					"cc4": { "rank": 0, "ability": "fgt", "type": "" },
+					"dec": { "rank": 0, "ability": "pre" },
+					"ex1": { "rank": 0, "ability": "int", "type": "" },
+					"ex2": { "rank": 0, "ability": "int", "type": "" },
+					"ex3": { "rank": 0, "ability": "int", "type": "" },
+					"ex4": { "rank": 0, "ability": "int", "type": "" },
+					"ins": { "rank": 0, "ability": "awe" },
+					"int": { "rank": 0, "ability": "pre" },
+					"inv": { "rank": 0, "ability": "int" },
+					"prc": { "rank": 0, "ability": "awe" },
+					"prs": { "rank": 0, "ability": "pre" },
+					"rc1": { "rank": 0, "ability": "dex", "type": "" },
+					"rc2": { "rank": 0, "ability": "dex", "type": "" },
+					"rc3": { "rank": 0, "ability": "dex", "type": "" },
+					"rc4": { "rank": 0, "ability": "dex", "type": "" },
+					"soh": { "rank": 0, "ability": "dex" },
+					"stl": { "rank": 0, "ability": "agi" },
+					"tec": { "rank": 0, "ability": "int" },
+					"trt": { "rank": 0, "ability": "int" },
+					"veh": { "rank": 0, "ability": "dex" }
+				}
 			}
+		},
+		"character": {
+			"templates": [ "actor" ]
+		},
+		"npc": {
+			"templates": [ "actor" ]
 		}
 	},
 	"Item": {

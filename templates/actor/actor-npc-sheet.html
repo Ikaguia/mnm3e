@@ -77,11 +77,7 @@
 							<div class="ability flexrow flex-group-center">
 								<label for="data.defences.{{key}}.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@defences.{{key}}.total" data-label="{{defence.label}}" data-rtype="defence">{{defence.label}}</label>
 								<label class="resource-label rollable align-left" data-roll="d20+@defences.{{key}}.total" data-rtype="defence" title="{{defence.rank}} (Rank) + {{defence.abilityTotal}} (Ability) + {{defence.bonus}} (Bonus)">{{numberFormat defence.total decimals=0 sign=true}}</label>
-								{{#if defence.readonly}}
-									<input type="text" name="data.defences.{{key}}.rank" id="data.defences.{{key}}.rank" value="{{defence.rank}}" data-dtype="Number" disabled/>
-								{{else}}
-									<input type="text" name="data.defences.{{key}}.rank" id="data.defences.{{key}}.rank" value="{{defence.rank}}" data-dtype="Number"/>
-								{{/if}}
+								<input type="text" name="data.defences.{{key}}.rank" id="data.defences.{{key}}.rank" value="{{defence.rank}}" data-dtype="Number"/>
 							</div>
 						{{/each}}
 					</div>
@@ -91,7 +87,7 @@
 						<div class="ability flexrow flex-group-center">
 							<label for="data.attributes.ini.rank" class="resource-label rollable flexlarge align-left" data-roll="d20+@attributes.ini.total" data-label="{{label}}" data-rtype="initiative">{{data.attributes.ini.label}}</label>
 							<label class="resource-label rollable align-left" data-roll="d20+@attributes.ini.total" data-label="{{label}}" data-rtype="initiative" title="{{data.attributes.ini.rank}} (Rank) + {{data.attributes.ini.abilityTotal}} (Ability) + {{data.attributes.ini.bonus}} (Bonus)">{{numberFormat data.attributes.ini.total decimals=0 sign=true}}</label>
-							<input type="text" name="data.attributes.ini.rank" id="data.attributes.ini.rank" value="{{data.attributes.ini.rank}}" data-dtype="Number" disabled/>
+							<input type="text" name="data.attributes.ini.rank" id="data.attributes.ini.rank" value="{{data.attributes.ini.rank}}" data-dtype="Number"/>
 						</div>
 					</div>
 				</aside>
