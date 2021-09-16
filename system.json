@@ -36,6 +36,6 @@
   "gridUnits": "ft",
   "url": "https://github.com/ikaguia/mnm3e",
   "manifest": "https://raw.githubusercontent.com/ikaguia/mnm3e/master/system.json",
-  "download": "https://github.com/ikaguia/mnm3e/releases/download/v0.0.1/release.zip",
+  "download": "https://github.com/ikaguia/mnm3e/releases/download/v0.0.2/release.zip",
   "license": "LICENSE.txt"
 }
