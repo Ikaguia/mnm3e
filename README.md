@@ -2,7 +2,7 @@
  Mutants and Masterminds 3e System for Foundry VTT
 
 This system was built using the [Boilerplate System](https://gitlab.com/asacolips-projects/foundry-mods/boilerplate/).
-This system is offered and may be used under the terms of the [Open Game Content](https://www.d20herosrd.com/).
+This system is offered and may be used under the terms of the Open Game License, and provides only the [Open Game Content](https://www.d20herosrd.com/) portions of the system.
 
 ## Installation Instructions
 
